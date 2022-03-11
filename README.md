@@ -45,5 +45,5 @@ sequence = s_1.s_2.s_3
 
 *missing reference*
 
-[*Randomness: quantum versus classical*, Andrei Khrennikov](https://arxiv.org/abs/1512.08852)
+[Andrei Khrennikov, *Randomness: quantum versus classical*](https://arxiv.org/abs/1512.08852)
 
