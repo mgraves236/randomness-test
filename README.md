@@ -29,7 +29,7 @@ Some standards are insufficient and one can find a PRNG that would pass the test
     - [Diehard Statistical Test Suite](https://github.com/GINARTeam/Diehard-statistical-test)
     - implement a new test described in a recent article
     - implement a brute force test
- 2. Analyze influence of testing parameters (enhance the complexity of performed tests, search for more complex, long range patterns in provided data). E.g. find parameters that will detect determinism of a following sequence (one third of the sequence can be predicted based on two precious parts): 
+ 2. Analyze influence of testing parameters (enhance the complexity of performed tests, search for more complex, long range patterns in provided data). E.g. find parameters that will detect determinism of a following sequence (one third of the sequence can be predicted based on two previous parts): 
 ```
 s_1 = 100mb from QRNG
 s_2 = 100mb from QRNG
