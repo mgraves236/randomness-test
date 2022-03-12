@@ -17,7 +17,7 @@ These random number generators relay on classical physical processes to create r
 QRNGs are based on the quantum property of indeterminacy. It is impossible to predict random numbers produced by these generators.
 
 
-# Randomness tests
+## Randomness tests
 Randomness tests are used to determine whether there is a recognizable pattern in a data set. It is crucial to assure the randomness of an algorithm before it will be used for purposes where security is concerned. These test should also confirm whether the generation process was a quantum one. 
 
 Some standards are insufficient and one can find a PRNG that would pass the test, while some QRNGs would not.
