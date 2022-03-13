@@ -47,3 +47,5 @@ sequence = s_1.s_2.s_3
 
 [Andrei Khrennikov, *Randomness: quantum versus classical*](https://arxiv.org/abs/1512.08852)
 
+[Predictive hacks, *How to test for randomness*](https://predictivehacks.com/how-to-test-for-randomness/)
+
