@@ -1,3 +1,3 @@
-function tomatoe() {
-	cout << "banana";
+void tomatoe() {
+	std::cout << "banana";
 }
