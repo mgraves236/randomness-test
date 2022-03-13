@@ -1,5 +1,5 @@
 #include <iostream>
-#include "potatoe.h"
+//#include "potatoe.h"
 #include "Jedrzej.h"
 
 int main(){
