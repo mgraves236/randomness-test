@@ -2,5 +2,5 @@
 #include "potatoe.h"
 
 void main(){
- cout<<"Hello World"; 
+ cout<<"Hello World"<<endl; 
 }
