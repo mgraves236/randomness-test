@@ -1,0 +1,3 @@
+function tomatoe() {
+	cout << "banana";
+}
