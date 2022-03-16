@@ -48,4 +48,5 @@ sequence = s_1.s_2.s_3
 [Andrei Khrennikov, *Randomness: quantum versus classical*](https://arxiv.org/abs/1512.08852)
 
 [Predictive hacks, *How to test for randomness*](https://predictivehacks.com/how-to-test-for-randomness/)
+[Andrew Rukhin,... *A Statistical Test Suite for Random and Pseudorandom Number Generators for Cryptographic Applications*(https://nvlpubs.nist.gov/nistpubs/legacy/sp/nistspecialpublication800-22r1a.pdf)]
 
