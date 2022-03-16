@@ -1,0 +1,6 @@
+HASŁOWO O TYM CO MÓWI JACAK:
+
+-(do zrobienia) analiza  obciążen zapotrzebowania na zasoby obliczeniowe od parametrów testowania
+-czy da rade zmieniać parametry w testach? (rozróżnianie wzorców testowania np 1 bit 2 bity 3 bity itd...)
+-domyślny patern testowania ma długość 8 bitów
+-nist. Można pokazać że zwiększenie długości paternu zapycha czas testowania

@@ -1,6 +1,6 @@
 #include <iostream>
 #include "namespace_std.h"
-#include <string.h>
+
 int main()
 {
     string name;
