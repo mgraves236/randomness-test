@@ -9,6 +9,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 using std::string;
-std::fstream bin_file;
-std::fstream dec_file;
+using std::fstream;
+
 #endif //RANDOMNESS_TEST_NAMESPACE_STD_H
