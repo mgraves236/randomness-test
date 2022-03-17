@@ -1,0 +1,3 @@
+C:/Users/Veget/Desktop/Kryptografia kwantowa/randomness-test/cmake-build-debug/CMakeFiles/randomness_test.dir
+C:/Users/Veget/Desktop/Kryptografia kwantowa/randomness-test/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Veget/Desktop/Kryptografia kwantowa/randomness-test/cmake-build-debug/CMakeFiles/rebuild_cache.dir
