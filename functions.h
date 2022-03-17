@@ -12,6 +12,8 @@
 #include "namespace_std.h"
 #include <filesystem>
 #define N 10 // number of digits in the biggest pattern
+string rnum;// because multithread is copying variables, without global string we will make 4 copies of
+            // rnum 800 MB each, i'm stupid so i don't have any better ideas
 
 
 void pseudorandom(int n){
@@ -50,7 +52,7 @@ string pattern_maker(int size,int n){//Look at the function name... It's not so 
     }
 }
 
-void check_pattern(std::ofstream &fres, string rnum, int i, int j){
+void check_pattern(std::ofstream &fres, int i, int j){
     string potatoe=pattern_maker(i,j);
     double count=0;
     for(int k=0;k<rnum.length()-i;k++) {//count pattern in random generated number
@@ -71,23 +73,22 @@ void test(){
     if(fres.is_open())cout<<"p.length"<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
 
     //bintotxt();
-    string rnum;// string for random number
     string potatoe; // string named after you
     fbin>>rnum;
     double count=0;
     for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
         for(int j=0;j<pow(2,i);j=j+4){//set pattern, j is pattern in decimal
             if(i==1){//2 threads
-                std::thread t1 (check_pattern,std::ref(fres), rnum, i, j);
-                std::thread t2 (check_pattern,std::ref(fres), rnum, i, j+1);
+                std::thread t1 (check_pattern,std::ref(fres), i, j);
+                std::thread t2 (check_pattern,std::ref(fres), i, j+1);
                 t1.join();
                 t2.join();
             }
             else{//4 threads
-                std::thread t1 (check_pattern,std::ref(fres), rnum, i, j);
-                std::thread t2 (check_pattern,std::ref(fres), rnum, i, j+1);
-                std::thread t3 (check_pattern,std::ref(fres), rnum, i, j+2);
-                std::thread t4 (check_pattern,std::ref(fres), rnum, i, j+3);
+                std::thread t1 (check_pattern,std::ref(fres), i, j);
+                std::thread t2 (check_pattern,std::ref(fres), i, j+1);
+                std::thread t3 (check_pattern,std::ref(fres), i, j+2);
+                std::thread t4 (check_pattern,std::ref(fres), i, j+3);
                 t1.join();
                 t2.join();
                 t3.join();
