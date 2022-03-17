@@ -17,7 +17,7 @@ string rnum;// because multithread is copying variables, without global string w
             // rnum 800 MB each, i'm stupid so i don't have any better ideas
 
 
-void pseudorandom(int n){
+void pseudorandom(int n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
     //todo, function will return n random numbers to file
     std::ofstream txt;
     txt.open("1010.txt",std::ios::out | std::ios::binary);
