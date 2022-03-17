@@ -42,7 +42,7 @@ string pattern_maker(int size,int n){//Look at the function name... It's not so 
 void test(){
     std::ifstream fbin ;
     fbin.open("1010.dat",std::ios::out | std::ios::binary);
-    fstream fres ;
+    std::ifstream fres ;
     fres.open("test_results.txt", std::ios::in | std::ios::out );
     fres<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
     cout<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
