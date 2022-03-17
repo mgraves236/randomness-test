@@ -12,7 +12,7 @@
 #include <filesystem>
 #define N 10 // number of digits in the biggest pattern
 
-void bintotxt(){
+void bintotxt(){// function will translate binary file to txt file, every 1 and 0 will become char 0 or 1
     std::ifstream binary ;
     binary.open("QNGFile.dat",std::ios::out | std::ios::binary);
     std::ofstream txt;
@@ -41,16 +41,17 @@ string pattern_maker(int size,int n){//Look at the function name... It's not so 
 }
 void test(){
     std::ifstream fbin ;
-    fbin.open("1010.dat",std::ios::out | std::ios::binary);
+    fbin.open("1010.txt",std::ios::out);
     std::ofstream fres ;
     fres.open("test_results.txt", std::ios::in | std::ios::out );
     fres<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
-    cout<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
+    if(fres.is_open())cout<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
 
     bintotxt();
     string rnum;// string for random number
     string potatoe; // string named after you
     fbin>>rnum;
+    cout<<rnum;
     double count=0;
     for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
         for(int j=0;j<pow(2,i);j++){//set pattern, j is pattern in decimal
