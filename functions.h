@@ -66,7 +66,7 @@ void check_pattern(std::ofstream &fres, int i, int j){
     fres<<i<<'\t'<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
 }
 
-void test(){
+void test(){// main testing function. todo - set limit to ~50 tested patterns for every i, we will be able to check N=20-30
     std::ifstream fbin ;
     fbin.open("1010.txt",std::ios::out);
     std::ofstream fres ;
