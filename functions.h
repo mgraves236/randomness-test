@@ -1,3 +1,4 @@
+// Created by basement troll
 #ifndef RANDOMNESS_TEST_FUNCTIONS_H
 #define RANDOMNESS_TEST_FUNCTIONS_H
 
