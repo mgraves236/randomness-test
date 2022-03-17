@@ -1,0 +1,4 @@
+pattern	pattern count	percentage	should-be %
+0	0	0	50
+1	0	0	50
+00	0	0	25
