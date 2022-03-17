@@ -7,12 +7,15 @@
 #include <fstream>
 #include <string>
 #include <iostream>
+#include <thread>
 #include <bitset>
 #include "namespace_std.h"
 #include <filesystem>
 #define N 10 // number of digits in the biggest pattern
 
+
 void pseudorandom(int n){
+    //todo, function will return n random numbers to file
     std::ofstream txt;
     txt.open("1010.txt",std::ios::out | std::ios::binary);
 
@@ -22,10 +25,12 @@ void bintotxt(){// function will translate binary file to txt file, every 1 and 
     binary.open("QNGFile.dat",std::ios::out | std::ios::binary);
     std::ofstream txt;
     txt.open("1010.txt",std::ios::out | std::ios::binary);
+
     string rnum;// string for random number
     char byte;
     while(binary.get(byte))
     txt<<std::bitset< 8 >( byte );
+
     txt.close();
     binary.close();
 }
@@ -44,13 +49,26 @@ string pattern_maker(int size,int n){//Look at the function name... It's not so 
         return r;
     }
 }
+
+void check_pattern(std::ofstream &fres, string rnum, int i, int j){
+    string potatoe=pattern_maker(i,j);
+    double count=0;
+    for(int k=0;k<rnum.length()-i;k++) {//count pattern in random generated number
+        if(rnum.substr(k,i)==potatoe){
+            count++;
+        }
+    }
+    cout<<i<<'\t'<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
+    fres<<i<<'\t'<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
+}
+
 void test(){
     std::ifstream fbin ;
     fbin.open("1010.txt",std::ios::out);
     std::ofstream fres ;
     fres.open("test_results.txt", std::ios::in | std::ios::out );
     fres<<"p.length"<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
-    if(fres.is_open())cout<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
+    if(fres.is_open())cout<<"p.length"<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
 
     //bintotxt();
     string rnum;// string for random number
@@ -58,16 +76,23 @@ void test(){
     fbin>>rnum;
     double count=0;
     for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
-        for(int j=0;j<pow(2,i);j++){//set pattern, j is pattern in decimal
-            potatoe=pattern_maker(i,j);
-            count=0;
-            for(int k=0;k<rnum.length()-i;k++) {//count pattern in random generated number
-                if(rnum.substr(k,i)==potatoe){
-                    count++;
-                }
+        for(int j=0;j<pow(2,i);j=j+4){//set pattern, j is pattern in decimal
+            if(i==1){//2 threads
+                std::thread t1 (check_pattern,std::ref(fres), rnum, i, j);
+                std::thread t2 (check_pattern,std::ref(fres), rnum, i, j+1);
+                t1.join();
+                t2.join();
             }
-            cout<<i<<'\t'<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
-            fres<<i<<'\t'<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
+            else{//4 threads
+                std::thread t1 (check_pattern,std::ref(fres), rnum, i, j);
+                std::thread t2 (check_pattern,std::ref(fres), rnum, i, j+1);
+                std::thread t3 (check_pattern,std::ref(fres), rnum, i, j+2);
+                std::thread t4 (check_pattern,std::ref(fres), rnum, i, j+3);
+                t1.join();
+                t2.join();
+                t3.join();
+                t4.join();
+            }
         }
     }
 
