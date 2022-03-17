@@ -12,6 +12,7 @@
 #include "namespace_std.h"
 #include <filesystem>
 #define N 10 // number of digits in the biggest pattern
+#define T 8 // number of threads
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
             // rnum 800 MB each, i'm stupid so i don't have any better ideas
 
@@ -70,31 +71,25 @@ void test(){
     std::ofstream fres ;
     fres.open("test_results.txt", std::ios::in | std::ios::out );
     fres<<"p.length"<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
-    if(fres.is_open())cout<<"p.length"<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
-
     //bintotxt();
     string potatoe; // string named after you
     fbin>>rnum;
-    double count=0;
+    double count=0,completed=0,max=4*(N*N)*(N+1)*(N+1)/4;
+    std::thread th[T];
+    int start_time = time(NULL);
     for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
-        for(int j=0;j<pow(2,i);j=j+4){//set pattern, j is pattern in decimal
-            if(i==1){//2 threads
-                std::thread t1 (check_pattern,std::ref(fres), i, j);
-                std::thread t2 (check_pattern,std::ref(fres), i, j+1);
-                t1.join();
-                t2.join();
+        for(int j=0;j<pow(2,i);j=j+T) {//set pattern, j is pattern in decimal
+            cout<<endl<<"progress: "<<(completed+j)/max*100<<"%"<<endl;
+            cout<<"should end in (I hope) less than: "<<(int)((((time(NULL)-start_time)/((completed+j)/max))/3600))<<" hours "<<((int)(((time(NULL)-start_time)/((completed+j)/max)))%3600)/60<<" minutes "<<(int)((time(NULL)-start_time)/((completed+j)/max))%60<<" seconds "<<endl<<endl;
+            cout<<"time passed: "<<(int)(((time(NULL)-start_time)/3600))<<" hours "<<(int)(((time(NULL)-start_time)/60)%3600)<<" minutes "<<(time(NULL)-start_time)%60<<" seconds "<<endl<<endl;
+            for (int k = 0; k < T &&k<pow(2,i); k++) {//2 threads
+                th[k] = std::thread(check_pattern, std::ref(fres), i, j + k);
             }
-            else{//4 threads
-                std::thread t1 (check_pattern,std::ref(fres), i, j);
-                std::thread t2 (check_pattern,std::ref(fres), i, j+1);
-                std::thread t3 (check_pattern,std::ref(fres), i, j+2);
-                std::thread t4 (check_pattern,std::ref(fres), i, j+3);
-                t1.join();
-                t2.join();
-                t3.join();
-                t4.join();
+            for (int k = 0;  k < T &&k<pow(2,i); k++) {//wait for threads to join
+                th[k].join();
             }
         }
+        completed+=pow(2,i);
     }
 
     fbin.close();
