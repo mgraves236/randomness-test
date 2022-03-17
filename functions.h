@@ -49,7 +49,7 @@ void test(){
     fbin.open("1010.txt",std::ios::out);
     std::ofstream fres ;
     fres.open("test_results.txt", std::ios::in | std::ios::out );
-    fres<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
+    fres<<"p.length"<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
     if(fres.is_open())cout<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
 
     //bintotxt();
@@ -66,8 +66,8 @@ void test(){
                     count++;
                 }
             }
-            cout<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
-            fres<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
+            cout<<i<<'\t'<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
+            fres<<i<<'\t'<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
         }
     }
 
