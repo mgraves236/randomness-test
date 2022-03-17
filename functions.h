@@ -80,7 +80,7 @@ void test(){
     for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
         for(int j=0;j<pow(2,i);j=j+T) {//set pattern, j is pattern in decimal
             cout<<endl<<"progress: "<<(completed+j)/max*100<<"%"<<endl;
-            cout<<"should end in (I hope) less than: "<<(int)((((time(NULL)-start_time)/((completed+j)/max))/3600))<<" hours "<<((int)(((time(NULL)-start_time)/((completed+j)/max)))%3600)/60<<" minutes "<<(int)((time(NULL)-start_time)/((completed+j)/max))%60<<" seconds "<<endl<<endl;
+            cout<<"should end in (I hope) less than: "<<(int)((((time(NULL)-start_time)/((completed+j)/max))/3600))<<" hours "<<((int)(((time(NULL)-start_time)/((completed+j)/max)))%3600)/60<<" minutes "<<(int)((time(NULL)-start_time)/((completed+j)/max))%60<<" seconds "<<endl;
             cout<<"time passed: "<<(int)(((time(NULL)-start_time)/3600))<<" hours "<<(int)(((time(NULL)-start_time)/60)%3600)<<" minutes "<<(time(NULL)-start_time)%60<<" seconds "<<endl<<endl;
             for (int k = 0; k < T &&k<pow(2,i); k++) {//2 threads
                 th[k] = std::thread(check_pattern, std::ref(fres), i, j + k);
