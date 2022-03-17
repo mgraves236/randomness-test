@@ -62,7 +62,7 @@ void test(){
             potatoe=pattern_maker(i,j);
             count=0;
             for(int k=0;k<rnum.length()-i;k++) {//count pattern in random generated number
-                if(rnum==potatoe){
+                if(rnum.substr(k,i)==potatoe){
                     count++;
                 }
             }
