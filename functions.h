@@ -20,7 +20,7 @@ void bintotxt(){
     string rnum;// string for random number
     char byte;
     while(binary.get(byte))
-    txt<<std::bitset< 8 >( byte )<<endl;
+    txt<<std::bitset< 8 >( byte );
     txt.close();
     binary.close();
 }
