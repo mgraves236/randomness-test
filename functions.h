@@ -104,5 +104,4 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
     fres.close();
 }
 
-
 #endif //RANDOMNESS_TEST_FUNCTIONS_H
