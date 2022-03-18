@@ -73,7 +73,6 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
     std::ofstream fres ;
     fres.open("test_results.txt", std::ios::in | std::ios::out );
     fres<<"p.length"<<"pattern"<<'\t'<<"pattern count"<<'\t'<<"percentage"<<'\t'<<"should-be %"<<endl;
-    //bintotxt();
     string potatoe; // string named after you
     fbin>>rnum;
     double count=0,completed=0,max,progress=0;
