@@ -21,7 +21,6 @@ string rnum;// because multithread is copying variables, without global string w
 
 
 void pseudorandom1(int n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
-    //todo, function will return n random numbers to file
     std::ofstream txt;
     txt.open("1010.txt",std::ios::out | std::ios::binary);
     srand(time(nullptr));
@@ -34,7 +33,6 @@ void pseudorandom1(int n){// remember to put bintotxt() in test() into comment b
 }
 
 void pseudorandom2(int n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
-    //todo, function will return n random numbers to file
     std::ofstream txt;
     txt.open("1010.txt",std::ios::out | std::ios::binary);
     std::mt19937 gen(time(nullptr));
