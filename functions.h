@@ -12,8 +12,9 @@
 #include <bitset>
 #include "namespace_std.h"
 #include <filesystem>
-#define N 10 // number of digits in the biggest pattern
+#define N 100 // number of digits in the biggest pattern
 #define T 8 // number of threads
+#define MPC 64 // maximum patterns checked, set to 2^N for all patterns
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
             // rnum 800 MB each, i'm stupid so i don't have any better ideas
 
@@ -75,17 +76,23 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
     //bintotxt();
     string potatoe; // string named after you
     fbin>>rnum;
-    double count=0,completed=0,max=4*(N*N)*(N+1)*(N+1)/4;
+    double count=0,completed=0,max,progress=0;
+    double n=log(MPC)/log(2);
+    if(pow(2,N)>MPC) max=4*(n*n)*(n+1)*(n+1)/4+(N-n)*MPC;//should be good
+    else max=4*(N*N)*(N+1)*(N+1)/4;
     std::thread th[T];
     int start_time = time(NULL);
     for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
-        for(int j=0;j<pow(2,i);j=j+T) {//set pattern, j is pattern in decimal
-            cout<<endl<<"progress: "<<(completed+j)/max*100<<"%"<<endl;
-            cout<<"should end in (I hope) less than: "<<(int)((((time(NULL)-start_time)/((completed+j)/max))/3600))<<" hours "<<((int)(((time(NULL)-start_time)/((completed+j)/max)))%3600)/60<<" minutes "<<(int)((time(NULL)-start_time)/((completed+j)/max))%60<<" seconds "<<endl;
-            //yes, it is ineffective
+        for(int j=0;j<pow(2,i);j+=T*(1+(int)(pow(2,i)/MPC-1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
+
+            progress=(completed+j)/max;
+            cout<<endl<<"progress: "<<progress*100<<"%"<<endl;
+            cout<<"should end in (I hope) less than: "<<(int)(((time(NULL)-start_time)/(progress)/3600))<<" hours "<<((int)((time(NULL)-start_time)/(progress))%3600)/60<<" minutes "<<(int)((time(NULL)-start_time)/(progress))%60<<" seconds "<<endl;
+            //yes, it is ineffective :(
             cout<<"time passed: "<<(int)(((time(NULL)-start_time)/3600))<<" hours "<<(int)(((time(NULL)-start_time))%3600)/60<<" minutes "<<(time(NULL)-start_time)%60<<" seconds "<<endl<<endl;
+
             for (int k = 0; k < T &&k<pow(2,i); k++) {//2 threads
-                th[k] = std::thread(check_pattern, std::ref(fres), i, j + k);
+                th[k] = std::thread(check_pattern, std::ref(fres), i, j + k*(T*(1+(int)(pow(2,i)/MPC-1)))/8);
             }
             for (int k = 0;  k < T &&k<pow(2,i); k++) {//wait for threads to join
                 th[k].join();
