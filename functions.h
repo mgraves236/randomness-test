@@ -109,7 +109,7 @@ void test(){// main testing function.
             progress=(completed)/max;
             cout<<endl<<"progress: "<<progress*100<<"%"<<endl;
             cout<<"should end in (I hope) less than: "<<(int)(((time(NULL)-start_time)/(progress)*(1+0.01*N/i)/3600))<<" hours "<<((int)((time(NULL)-start_time)/(progress)*(1+0.01*N/i))%3600)/60<<" minutes "<<(int)((time(NULL)-start_time)/(progress)*(1+0.01*N/i))%60<<" seconds "<<endl;
-            //yes, it is ineffective :(, (1+0.01*N/i) because for longer patterns checking will take more time
+            //yes, it is inefficient :(, (1+0.01*N/i) because for longer patterns checking will take more time
             cout<<"time passed: "<<(int)(((time(NULL)-start_time)/3600))<<" hours "<<(int)(((time(NULL)-start_time))%3600)/60<<" minutes "<<(time(NULL)-start_time)%60<<" seconds "<<endl<<endl;
 
             for (unsigned __int64 k = 0; k < T &&k<pow(2,i); k++) {//starting T threads
