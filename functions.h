@@ -96,9 +96,9 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
             for (int k = 0;  k < T &&k<pow(2,i); k++) {//wait for threads to join
                 th[k].join();
             }
+            if(pow(2,i)<T) completed+=pow(2,i);
+            else completed+=T;
         }
-        if(pow(2,i)<=MPC) completed+=pow(2,i);
-        else completed+=64;
     }
 
     fbin.close();
