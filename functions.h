@@ -84,7 +84,6 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
     int start_time = time(NULL);
     for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
         for(int j=0;j<pow(2,i);j+=T*(1+(int)(pow(2,i)/MPC-1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
-
             progress=(completed+j)/max;
             cout<<endl<<"progress: "<<progress*100<<"%"<<endl;
             cout<<"should end in (I hope) less than: "<<(int)(((time(NULL)-start_time)/(progress)/3600))<<" hours "<<((int)((time(NULL)-start_time)/(progress))%3600)/60<<" minutes "<<(int)((time(NULL)-start_time)/(progress))%60<<" seconds "<<endl;
@@ -98,7 +97,8 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
                 th[k].join();
             }
         }
-        completed+=pow(2,i);
+        if(pow(2,i)<=MPC) completed+=pow(2,i);
+        else completed+=64;
     }
 
     fbin.close();
