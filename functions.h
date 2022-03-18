@@ -20,25 +20,25 @@ string rnum;// because multithread is copying variables, without global string w
             // rnum 800 MB each, i'm stupid so i don't have any better ideas
 
 
-void pseudorandom1(int n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
+void pseudorandom1(unsigned __int64 n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
     std::ofstream txt;
     txt.open("1010.txt",std::ios::out | std::ios::binary);
     srand(time(nullptr));
 
-    for(int i=0; i<n; ++i)
+    for(unsigned __int64 i=0; i<n; ++i)
     {
         txt << rand()%2;
     }
     txt.close();
 }
 
-void pseudorandom2(int n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
+void pseudorandom2(unsigned __int64 n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
     std::ofstream txt;
     txt.open("1010.txt",std::ios::out | std::ios::binary);
     std::mt19937 gen(time(nullptr));
     std::uniform_int_distribution<> distr(0, 1);
 
-    for(int i=0; i<n; ++i)
+    for(unsigned __int64 i=0; i<n; ++i)
     {
         txt << distr(gen);
     }
@@ -60,7 +60,7 @@ void bintotxt(){// function will translate binary file to txt file, every 1 and 
     binary.close();
 }
 
-string pattern_maker(int size,int n){//Look at the function name... It's not so hard
+string pattern_maker(unsigned __int64 size,unsigned __int64 n){//Look at the function name... It's not so hard
     {
         string r="";
         while(n!=0) {
@@ -75,10 +75,10 @@ string pattern_maker(int size,int n){//Look at the function name... It's not so 
     }
 }
 
-void check_pattern(std::ofstream &fres, int i, int j){
+void check_pattern(std::ofstream &fres, unsigned __int64 i, unsigned __int64 j){
     string potatoe=pattern_maker(i,j);
     double count=0;
-    for(int k=0;k<rnum.length()-i;k++) {//count pattern in random generated number
+    for(unsigned __int64 k=0;k<rnum.length()-i;k++) {//count pattern in random generated number
         if(rnum.substr(k,i)==potatoe){
             count++;
         }
@@ -101,22 +101,22 @@ void test(){// main testing function.
     else max=4*(N*N)*(N+1)*(N+1)/4;
     std::thread th[T];
     srand (time(NULL));
-    int start_time = time(NULL);
+    unsigned __int64 start_time = time(NULL);
 
 
-    for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
-        for(int j=0;j<pow(2,i);j+=T*(1+(int)(pow(2,i)/MPC-1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
+    for(unsigned __int64 i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
+        for(unsigned __int64 j=0;j<pow(2,i);j+=T*(1+(unsigned __int64)(pow(2,i)/MPC-1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
             progress=(completed)/max;
             cout<<endl<<"progress: "<<progress*100<<"%"<<endl;
             cout<<"should end in (I hope) less than: "<<(int)(((time(NULL)-start_time)/(progress)*(1+0.01*N/i)/3600))<<" hours "<<((int)((time(NULL)-start_time)/(progress)*(1+0.01*N/i))%3600)/60<<" minutes "<<(int)((time(NULL)-start_time)/(progress)*(1+0.01*N/i))%60<<" seconds "<<endl;
             //yes, it is ineffective :(, (1+0.01*N/i) because for longer patterns checking will take more time
             cout<<"time passed: "<<(int)(((time(NULL)-start_time)/3600))<<" hours "<<(int)(((time(NULL)-start_time))%3600)/60<<" minutes "<<(time(NULL)-start_time)%60<<" seconds "<<endl<<endl;
 
-            for (int k = 0; k < T &&k<pow(2,i); k++) {//starting T threads
-                th[k] = std::thread(check_pattern, std::ref(fres), i, (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(int)(pow(2,i)/MPC-1)))/8)));
+            for (unsigned __int64 k = 0; k < T &&k<pow(2,i); k++) {//starting T threads
+                th[k] = std::thread(check_pattern, std::ref(fres), i, (j+(k*(T*(1+(unsigned __int64)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(unsigned __int64)(pow(2,i)/MPC-1)))/8)));
                 //not random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)) random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(int)(pow(2,i)/MPC-1)))/8))
             }cout<<endl;
-            for (int k = 0;  k < T &&k<pow(2,i); k++) {//wait for threads to join
+            for (unsigned __int64 k = 0;  k < T &&k<pow(2,i); k++) {//wait for threads to join
                 th[k].join();
             }
             if(pow(2,i)<T) completed+=pow(2,i);

@@ -1,14 +1,9 @@
 # ninja log v5
-0	18	0	clean	b72c21c3e92959a
-4	634	6693148847595966	CMakeFiles/randomness_test.dir/main.cpp.obj	62dac318ba840600
-634	781	6693148849037275	randomness_test.exe	a13bf2414578886b
-4	703	6693148980273663	CMakeFiles/randomness_test.dir/main.cpp.obj	62dac318ba840600
-704	868	6693148981905145	randomness_test.exe	a13bf2414578886b
-3	632	6693149408329481	CMakeFiles/randomness_test.dir/main.cpp.obj	62dac318ba840600
-633	773	6693149409735944	randomness_test.exe	a13bf2414578886b
-4	597	6693150441622221	CMakeFiles/randomness_test.dir/main.cpp.obj	62dac318ba840600
-598	738	6693150443033495	randomness_test.exe	a13bf2414578886b
-3	633	6693150736465602	CMakeFiles/randomness_test.dir/main.cpp.obj	62dac318ba840600
-634	770	6693150737796803	randomness_test.exe	a13bf2414578886b
 3	625	6693152839399541	CMakeFiles/randomness_test.dir/main.cpp.obj	62dac318ba840600
+0	18	0	clean	b72c21c3e92959a
 626	771	6693152840850859	randomness_test.exe	a13bf2414578886b
+1	455	6693166055092835	build.ninja	d0a052aeef02ad8
+4	784	6693166063790728	CMakeFiles/randomness_test.dir/main.cpp.obj	62dac318ba840600
+784	942	6693166065302098	randomness_test.exe	a13bf2414578886b
+4	922	6693174852958094	CMakeFiles/randomness_test.dir/main.cpp.obj	62dac318ba840600
+923	1086	6693174854559546	randomness_test.exe	a13bf2414578886b

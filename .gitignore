@@ -1,2 +1,7 @@
 /cmake-build-debug/1010.txt
-/cmake-build-debug/QNGFile.dat.txt
+/cmake-build-debug/QNGFile.dat
+/cmake-build-debug/Testing/
+/cmake-build-debug/coverage/
+/cmake-build-debug/CMakeFiles/
+/cmake-build-debug/.cmake/
+/cmake-build-debug/test_results.txt
