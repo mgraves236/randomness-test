@@ -4,3 +4,20 @@ HASŁOWO O TYM CO MÓWI JACAK:
 -czy da rade zmieniać parametry w testach? (rozróżnianie wzorców testowania np 1 bit 2 bity 3 bity itd...)
 -domyślny patern testowania ma długość 8 bitów
 -nist. Można pokazać że zwiększenie długości paternu zapycha czas testowania
+
+
+
+analiza zapotrzebowania od parametrów testowania
+
+dowód Kantora - nieprzeliczalnie dużo gęsto ciągów 0 1
+losowość - wszystkie możliwe patterny występują częśtość występowania taka jak w idealnym ciągu
+np. 0 i 1 = po 50%
+dwuczłonowe 01 00 11 10 - po 25%
+
+czasy na procesorze
+NIST - długość patternów się podnosi - zwiększanie się czasów, które powinny być w czasie rzeczywistym testowane
+bit crush, small crush w TestU01
+
+czytamy kolejne bajtu znaków = tłumaczymy na  0  1
+na binarnym zliczamy 1 - wyszła połowa jest ok
+zliczmy 00 - 25% - passed, 01 - passed
