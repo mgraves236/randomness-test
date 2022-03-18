@@ -5,6 +5,7 @@ Random number generators are defined by algorithms thus are actually *pseudo-ran
 
 This behavior is undesirable in many of the applications of RNGs, including crucial ones as cryptography or communication protocols. 
 
+## Random Number Generators
 There are three types of RNGs: Pseudo-random number generators (PRNGs), True random number generators (TRNGs) and Quantum random number generators (QRNGs).
 
 ###### PRNGs
