@@ -67,7 +67,7 @@ void check_pattern(std::ofstream &fres, int i, int j){
     fres<<i<<'\t'<<potatoe<<'\t'<<count<<'\t'<<count/(rnum.length()-i)*100<<'\t'<< 1/(double)pow(2,i)*100 <<endl;
 }
 
-void test(){// main testing function. todo - set limit to ~50 tested patterns for every i, we will be able to check N=20-30
+void test(){// main testing function.
     std::ifstream fbin ;
     fbin.open("1010.txt",std::ios::out);
     std::ofstream fres ;
@@ -80,7 +80,10 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
     if(pow(2,N)>MPC) max=4*(n*n)*(n+1)*(n+1)/4+(N-n)*MPC;//should be good
     else max=4*(N*N)*(N+1)*(N+1)/4;
     std::thread th[T];
+    srand (time(NULL));
     int start_time = time(NULL);
+
+
     for(int i=1;i<=N;i++){//how big is pattern?, pow(2,i) is pattern size
         for(int j=0;j<pow(2,i);j+=T*(1+(int)(pow(2,i)/MPC-1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
             progress=(completed)/max;
@@ -90,9 +93,9 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
             cout<<"time passed: "<<(int)(((time(NULL)-start_time)/3600))<<" hours "<<(int)(((time(NULL)-start_time))%3600)/60<<" minutes "<<(time(NULL)-start_time)%60<<" seconds "<<endl<<endl;
 
             for (int k = 0; k < T &&k<pow(2,i); k++) {//starting T threads
-                th[k] = std::thread(check_pattern, std::ref(fres), i, j + k*(T*(1+(int)(pow(2,i)/MPC-1)))/8);
-                //we can randomize it by changing k*(T*(1+(int)(pow(2,i)/MPC-1)))/8) to rand()%(int)(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8))
-            }
+                th[k] = std::thread(check_pattern, std::ref(fres), i, (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(int)(pow(2,i)/MPC-1)))/8)));
+                //not random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)) random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(int)(pow(2,i)/MPC-1)))/8))
+            }cout<<endl;
             for (int k = 0;  k < T &&k<pow(2,i); k++) {//wait for threads to join
                 th[k].join();
             }
