@@ -13,7 +13,7 @@
 #include "namespace_std.h"
 #include <filesystem>
 #define N 100 // number of digits in the biggest pattern
-#define T 8 // number of threads
+#define T 8 // number of threads, don't use more than ~75% of your Logical Processors or you will kill your pc
 #define MPC 64 // maximum patterns checked, set to 2^N for all patterns
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
             // rnum 800 MB each, i'm stupid so i don't have any better ideas
