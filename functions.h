@@ -89,8 +89,9 @@ void test(){// main testing function. todo - set limit to ~50 tested patterns fo
             //yes, it is ineffective :(, (1+0.01*N/i) because for longer patterns checking will take more time
             cout<<"time passed: "<<(int)(((time(NULL)-start_time)/3600))<<" hours "<<(int)(((time(NULL)-start_time))%3600)/60<<" minutes "<<(time(NULL)-start_time)%60<<" seconds "<<endl<<endl;
 
-            for (int k = 0; k < T &&k<pow(2,i); k++) {//2 threads
-                th[k] = std::thread(check_pattern, std::ref(fres), i, j + k*(T*(1+(int)(pow(2,i)/MPC-1)))/8);//we can randomize it by changing k*(T*(1+(int)(pow(2,i)/MPC-1)))/8) to rand()%(int)(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8))
+            for (int k = 0; k < T &&k<pow(2,i); k++) {//starting T threads
+                th[k] = std::thread(check_pattern, std::ref(fres), i, j + k*(T*(1+(int)(pow(2,i)/MPC-1)))/8);
+                //we can randomize it by changing k*(T*(1+(int)(pow(2,i)/MPC-1)))/8) to rand()%(int)(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8))
             }
             for (int k = 0;  k < T &&k<pow(2,i); k++) {//wait for threads to join
                 th[k].join();
