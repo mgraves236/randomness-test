@@ -12,6 +12,7 @@
 #include <bitset>
 #include "namespace_std.h"
 #include <filesystem>
+#include <random>
 #define N 100 // number of digits in the biggest pattern
 #define T 8 // number of threads, don't use more than ~75% of your Logical Processors or you will kill your pc
 #define MPC 64 // maximum patterns checked, set to 2^N for all patterns
@@ -19,12 +20,33 @@ string rnum;// because multithread is copying variables, without global string w
             // rnum 800 MB each, i'm stupid so i don't have any better ideas
 
 
-void pseudorandom(int n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
+void pseudorandom1(int n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
     //todo, function will return n random numbers to file
     std::ofstream txt;
     txt.open("1010.txt",std::ios::out | std::ios::binary);
+    srand(time(nullptr));
 
+    for(int i=0; i<n; ++i)
+    {
+        txt << rand()%2;
+    }
+    txt.close();
 }
+
+void pseudorandom2(int n){// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
+    //todo, function will return n random numbers to file
+    std::ofstream txt;
+    txt.open("1010.txt",std::ios::out | std::ios::binary);
+    std::mt19937 gen(time(nullptr));
+    std::uniform_int_distribution<> distr(0, 1);
+
+    for(int i=0; i<n; ++i)
+    {
+        txt << distr(gen);
+    }
+    txt.close();
+}
+
 void bintotxt(){// function will translate binary file to txt file, every 1 and 0 will become char 0 or 1
     std::ifstream binary ;
     binary.open("QNGFile.dat",std::ios::out | std::ios::binary);
