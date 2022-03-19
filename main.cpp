@@ -6,7 +6,7 @@ int main()
     return 0;
 }
 // Created by usiox on 13.03.2022.
-//
+// DANIEL SMIERDZI
 
 /*  Why this program is stupid?
  *  We are translating 8 bits into char to write it into a file as 8*8 bits (1 and 0 in txt file are bytes-8 bits)
