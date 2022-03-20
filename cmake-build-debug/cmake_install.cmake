@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/usiox/Desktop/GitHub/Randomness_tests
+# Install script for directory: C:/Users/Veget/Desktop/Kryptografia kwantowa/randomness-test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/usiox/Desktop/GitHub/Randomness_tests/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Veget/Desktop/Kryptografia kwantowa/randomness-test/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
