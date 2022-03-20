@@ -20,7 +20,8 @@
 #define MPC 64 // maximum patterns checked, set to 2^N for all patterns
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
 			// rnum 800 MB each, i'm stupid so i don't have any better ideas
-
+double counts[MPC]={0},av=0,standard_deviation=0;
+int ct=0; // it will be used in functions so i made it a little easier.
 void pseudorandom1(
 		unsigned __int64 n) {// remember to put bintotxt() in test() into comment before using it, bintotxt will overwrite file
 	std::ofstream txt;
@@ -77,6 +78,7 @@ string pattern_maker(unsigned __int64 size, unsigned __int64 n) {//Look at the f
 }
 
 void check_pattern(std::ofstream &fres, unsigned __int64 i, unsigned __int64 j) {
+    ct++;
 	string potatoe = pattern_maker(i, j);
 	double count = 0;
 	for (unsigned __int64 k = 0; k < rnum.length() - i; k++) {//count pattern in random generated number
@@ -88,24 +90,29 @@ void check_pattern(std::ofstream &fres, unsigned __int64 i, unsigned __int64 j) 
 		 << 1 / (double) pow(2, i) * 100 << endl;
 	fres << i << '\t' << potatoe << '\t' << count << '\t' << count / (rnum.length() - i) * 100 << '\t'
 		 << 1 / (double) pow(2, i) * 100 << endl;
+    counts[ct-1]=count;
 }
 
 void test() {// main testing function.
 	bintotxt();
 	std::ifstream fbin;
 	fbin.open("1010.txt", std::ios::out);
+
 	std::ofstream fres;
 	fres.open("test_results.txt", std::ios::in | std::ios::out);
 	fres << "p.length" << "pattern" << '\t' << "pattern count" << '\t' << "percentage" << '\t' << "should-be %" << endl;
-	std::ofstream timeFile;
-	timeFile.open("time_meas.txt");
-	timeFile << "p.length\t" << "time" << endl;
+
+	std::ofstream averageFile;
+	averageFile.open("time_meas.txt");
+	averageFile << "p.length\t" << "time\t" <<"av_time\t" <<"standard_deviation\t" << endl;
+
 	string potatoe; // string named after you
 	fbin >> rnum;
 	double count = 0, completed = 0, max, progress = 0;
 	double n = log(MPC) / log(2);
 	if (pow(2, N) > MPC) max = 4 * (n * n) * (n + 1) * (n + 1) / 4 + (N - n) * MPC;//should be good
 	else max = 4 * (N * N) * (N + 1) * (N + 1) / 4;
+    unsigned __int64 k=0;
 	std::thread th[T];
 	srand(time(NULL));
 	unsigned __int64 start_time = time(NULL);
@@ -114,8 +121,7 @@ void test() {// main testing function.
 	for (unsigned __int64 i = 1; i <= N; i++) {//how big is pattern?, pow(2,i) is pattern size
 		// measure time only to N = 6
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
-		for (unsigned __int64 j = 0; j < pow(2, i); j += T * (1 + (unsigned __int64) (pow(2, i) / MPC -
-																					  1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
+		for (unsigned __int64 j = 0; j < pow(2, i); j += T * (1 + (unsigned __int64) (pow(2, i) / MPC -1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
 			progress = (completed) / max;
 			cout << endl << "progress: " << progress * 100 << "%" << endl;
 			cout << "should end in (I hope) less than: "
@@ -127,23 +133,27 @@ void test() {// main testing function.
 				 << (int) (((time(NULL) - start_time)) % 3600) / 60 << " minutes " << (time(NULL) - start_time) % 60
 				 << " seconds " << endl << endl;
 
-			for (unsigned __int64 k = 0; k < T && k < pow(2, i); k++) {//starting T threads
+			for (k = 0; k < T && k < pow(2, i); k++) {//starting T threads
 				th[k] = std::thread(check_pattern, std::ref(fres), i,
 									(j + (k * (T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / 8) +
 									 rand() % ((T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / 8)));
 				//not random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)) random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(int)(pow(2,i)/MPC-1)))/8))
 			}
 			cout << endl;
-			for (unsigned __int64 k = 0; k < T && k < pow(2, i); k++) {//wait for threads to join
+			for (k = 0; k < T && k < pow(2, i); k++) {//wait for threads to join
 				th[k].join();
 			}
 			if (pow(2, i) < T) completed += pow(2, i);
 			else completed += T;
 		}
+        for(int l=0;l<ct;l++) av+=counts[l]/ct;
+        for(int l=0;l<ct;l++) standard_deviation+=pow(counts[l]-av,2);
+        standard_deviation=sqrt(standard_deviation/ct);
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-		timeFile << i << "\t" <<  std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << endl;
+        averageFile << i << "\t" <<  std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() <<'\t'<<(std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count())/k<<'\t'<<standard_deviation<< endl;
+        ct=0; av=0; standard_deviation=0;
 	}
-	timeFile.close();
+    averageFile.close();
 	fbin.close();
 	fres.close();
 }
