@@ -88,7 +88,6 @@ void check_pattern(std::ofstream &fres, unsigned __int64 i,double &counts, unsig
 	fres << i << '\t' << potatoe << '\t' << count << '\t' << count / (rnum.length() - i) * 100 << '\t'
 		 << 1 / (double) pow(2, i) * 100 << endl;
     counts=count;
-    cout<<"counts: "<<counts<<endl;
 }
 
 void test() {// main testing function.
@@ -153,7 +152,6 @@ void test() {// main testing function.
 			else completed += T;
 		}
         for(int l=0;l<ct;l++) av+=(counts[l]/ct);
-        cout<<endl<<endl<<counts[0]<<endl;
         for(int l=0;l<ct;l++) standard_deviation+=pow(counts[l]-av,2);
         standard_deviation=sqrt(standard_deviation/ct);
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
