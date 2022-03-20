@@ -75,7 +75,7 @@ string pattern_maker(unsigned __int64 size, unsigned __int64 n) {//Look at the f
 	}
 }
 
-void check_pattern(std::ofstream &fres, unsigned __int64 i,double counts, unsigned __int64 j) {
+void check_pattern(std::ofstream &fres, unsigned __int64 i,double &counts, unsigned __int64 j) {
 	string potatoe = pattern_maker(i, j);
 	double count = 0;
 	for (unsigned __int64 k = 0; k < rnum.length() - i; k++) {//count pattern in random generated number
