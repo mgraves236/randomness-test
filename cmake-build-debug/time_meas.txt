@@ -1,2 +1,4 @@
-p.length	time	av_time	av_count	standard_deviation	
-1	25392586100	2.53926e+10	4e+08	11293.5
+p.length	time	av_time	av_count	standard_deviation	s_d_as_%_of_av_count	
+1	26605005100	2.6605e+10	4e+08	11293.50.00282338
+2	32597191800	3.25972e+10	2e+08	8429.160.00421458
+3	35038884100	3.50389e+10	1e+08	7126.580.00712658

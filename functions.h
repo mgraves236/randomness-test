@@ -101,7 +101,7 @@ void test() {// main testing function.
 
 	std::ofstream averageFile;
 	averageFile.open("time_meas.txt");
-	averageFile << "p.length\t" << "time\t" <<"av_time\t" <<"av_count\t"<<"standard_deviation\t" << endl;
+	averageFile << "p.length\t" << "time\t" <<"av_time\t" <<"av_count\t"<<"standard_deviation\t" <<"s_d_as_%_of_av_count\t" << endl;
 
     if(!averageFile.is_open() || !fres.is_open() || !fbin.is_open()){
         cout<<"file error";
@@ -156,7 +156,7 @@ void test() {// main testing function.
         standard_deviation=sqrt(standard_deviation/ct);
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         averageFile << i << "\t" <<  std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() <<'\t'
-        <<(std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count())/av_time_helper<<'\t'<<av<<'\t'<<standard_deviation<< endl;
+        <<(std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count())/av_time_helper<<'\t'<<av<<'\t'<<standard_deviation<<'\t'<<standard_deviation/av*100<< endl;
         ct=0; av=0; standard_deviation=0;av_time_helper=0;
 	}
     averageFile.close();
