@@ -96,7 +96,7 @@ void test() {// main testing function.
 	fbin.open("1010.txt", std::ios::out);
 
 	std::ofstream fres;
-	fres.open("test_results.txt", std::ios::in | std::ios::out);
+	fres.open("test_results.txt");
 	fres << "p.length" << "pattern" << '\t' << "pattern count" << '\t' << "percentage" << '\t' << "should-be %" << endl;
 
 	std::ofstream averageFile;
