@@ -14,7 +14,7 @@ int main()
  *  Next we are comparing these 1 and 0 as string to other 1 and 0 strings that we made from int, in this situation
  *  instead of comparing fe. 10010 to 11111 as bits we are comparing "10010" to "11111" strings that contain 40 bits
  *  each instead of 5. That's because Vegetto is stupid - he should use std::bitset
- *.
+ *
  *  "Brainfuck>C++"
  *  ~Vegetto
  */
