@@ -97,7 +97,7 @@ void test() {// main testing function.
 
 	std::ofstream fres;
 	fres.open("test_results.txt");
-	fres << "p.length" << "pattern" << '\t' << "pattern count" << '\t' << "percentage" << '\t' << "should-be %" << endl;
+	fres << "p. max-length" << "pattern" << '\t' << "pattern count" << '\t' << "percentage" << '\t' << "should-be %" << endl;
 
 	std::ofstream averageFile;
 	averageFile.open("time_meas.txt");
@@ -120,10 +120,10 @@ void test() {// main testing function.
 	srand(time(NULL));
 	unsigned __int64 start_time = time(NULL);
 
-
+	// measure time only to N = 6
+	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	for (unsigned __int64 i = 1; i <= N; i++) {//how big is pattern?, pow(2,i) is pattern size
-		// measure time only to N = 6
-		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
+
 		for (unsigned __int64 j = 0; j < pow(2, i); j += T * (1 + (unsigned __int64) (pow(2, i) / MPC -1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
             av_time_helper++;
             progress = (completed) / max;
@@ -151,14 +151,17 @@ void test() {// main testing function.
 			if (pow(2, i) < T) completed += pow(2, i);
 			else completed += T;
 		}
-        for(int l=0;l<ct;l++) av+=(counts[l]/ct);
-        for(int l=0;l<ct;l++) standard_deviation+=pow(counts[l]-av,2);
-        standard_deviation=sqrt(standard_deviation/ct);
-		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-        averageFile << i << "\t" <<  std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() <<'\t'
-        <<(std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count())/av_time_helper<<'\t'<<av<<'\t'<<standard_deviation<<'\t'<<standard_deviation/av*100<< endl;
-        ct=0; av=0; standard_deviation=0;av_time_helper=0;
+
 	}
+
+	for(int l=0;l<ct;l++) av+=(counts[l]/ct);
+	for(int l=0;l<ct;l++) standard_deviation+=pow(counts[l]-av,2);
+	standard_deviation=sqrt(standard_deviation/ct);
+	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+	averageFile << N << "\t" <<  std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() <<'\t'
+				<<(std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count())/av_time_helper<<'\t'<<av<<'\t'<<standard_deviation<<'\t'<<standard_deviation/av*100<< endl;
+	ct=0; av=0; standard_deviation=0;av_time_helper=0;
+
     averageFile.close();
 	fbin.close();
 	fres.close();
