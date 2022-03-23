@@ -89,6 +89,16 @@ void check_pattern(std::ofstream &fres, unsigned __int64 i,double &counts, unsig
 		 << 1 / (double) pow(2, i) * 100 << endl;
     counts=count;
 }
+void fxor(){// xor function
+    string banana="";
+    for(int i=0;i<rnum.length()/2;i++){
+        if(rnum[i]==rnum[rnum.length()/2+i])
+            banana+="0";
+        else
+            banana+="1";
+    }
+    //todo - add banana to rnum or something idk.
+}
 
 void test() {// main testing function.
 	bintotxt();
@@ -112,6 +122,7 @@ void test() {// main testing function.
     int ct=0;
 	string potatoe; // string named after you
 	fbin >> rnum;
+
 	double completed = 0, max, progress = 0;
 	double n = log(MPC) / log(2);
 	if (pow(2, N) > MPC) max = 4 * (n * n) * (n + 1) * (n + 1) / 4 + (N - n) * MPC;//should be good
