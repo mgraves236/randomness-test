@@ -91,7 +91,7 @@ void check_pattern(std::ofstream &fres, unsigned __int64 i,double &counts, unsig
 }
 void fxor(){// xor function
     string banana="";
-    for(int i=0;i<rnum.length()/2;i++){
+    for(int i=0;i<(int)(rnum.length()/2);i++){
         if(rnum[i]==rnum[rnum.length()/2+i])
             banana+="0";
         else
