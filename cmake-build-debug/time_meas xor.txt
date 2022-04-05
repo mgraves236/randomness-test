@@ -1,0 +1,1 @@
+p.length	time	av_time	av_count	standard_deviation	s_d_as_%_of_av_count	

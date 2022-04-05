@@ -15,9 +15,9 @@
 #include <random>
 #include <chrono>
 
-#define N 100 // number of digits in the biggest pattern
+#define N 12 // number of digits in the biggest pattern
 #define T 8  // number of threads, don't use more than ~75% of your Logical Processors or you will kill your pc
-#define MPC 64 // maximum patterns checked, set to 2^N for all patterns
+#define MPC 5000 // maximum patterns checked, set to 2^N for all patterns
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
 			// rnum 800 MB each, i'm stupid so i don't have any better ideas
 void pseudorandom1(
@@ -47,7 +47,7 @@ void pseudorandom2(
 
 void bintotxt() {// function will translate binary file to txt file, every 1 and 0 will become char 0 or 1
 	std::ifstream binary;
-	binary.open("QNGFile.dat", std::ios::out | std::ios::binary);
+	binary.open("QNGFile1XORQNGFile2.data", std::ios::out | std::ios::binary);
 	std::ofstream txt;
 	txt.open("1010.txt", std::ios::out | std::ios::binary);
 
