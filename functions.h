@@ -45,7 +45,7 @@ void pseudorandom2(
 	txt.close();
 }
 
-void bintotxt() {// function will translate binary file to txt file, every 1 and 0 will become char 0 or 1
+void bintotxt(double max) {// function will translate binary file to txt file, every 1 and 0 will become char 0 or 1
 	std::ifstream binary;
 	binary.open("QNGFile.dat", std::ios::out | std::ios::binary);//QNGFile1XORQNGFile2.data
 	std::ofstream txt;
@@ -53,8 +53,11 @@ void bintotxt() {// function will translate binary file to txt file, every 1 and
 
 	string rnum;// string for random number
 	char byte;
-	while (binary.get(byte))
-		txt << std::bitset<8>(byte);
+    int i=0;
+	while (binary.get(byte)&&i<max) {
+        txt << std::bitset<8>(byte);
+        i++;
+    }
 
 	txt.close();
 	binary.close();
@@ -102,7 +105,7 @@ void fxor(){// xor function
 
 void test() {// main testing function.
     //pseudorandom1(10000000);
-	bintotxt();
+	bintotxt(10000000);
 	std::ifstream fbin;
 	fbin.open("1010.txt", std::ios::out);
 
