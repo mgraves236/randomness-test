@@ -15,7 +15,7 @@
 #include <random>
 #include <chrono>
 
-#define N 12 // number of digits in the biggest pattern
+#define N 11 // number of digits in the biggest pattern
 #define T 8  // number of threads, don't use more than ~75% of your Logical Processors or you will kill your pc
 #define MPC 5000 // maximum patterns checked, set to 2^N for all patterns
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
@@ -47,7 +47,7 @@ void pseudorandom2(
 
 void bintotxt() {// function will translate binary file to txt file, every 1 and 0 will become char 0 or 1
 	std::ifstream binary;
-	binary.open("QNGFile1XORQNGFile2.data", std::ios::out | std::ios::binary);
+	binary.open("QNGFile.dat", std::ios::out | std::ios::binary);//QNGFile1XORQNGFile2.data
 	std::ofstream txt;
 	txt.open("1010.txt", std::ios::out | std::ios::binary);
 
@@ -101,6 +101,7 @@ void fxor(){// xor function
 }
 
 void test() {// main testing function.
+    //pseudorandom1(10000000);
 	bintotxt();
 	std::ifstream fbin;
 	fbin.open("1010.txt", std::ios::out);
@@ -135,44 +136,48 @@ void test() {// main testing function.
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	for (unsigned __int64 i = 1; i <= N; i++) {//how big is pattern?, pow(2,i) is pattern size
 
-		for (unsigned __int64 j = 0; j < pow(2, i); j += T * (1 + (unsigned __int64) (pow(2, i) / MPC -1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
+        for (unsigned __int64 j = 0; j < pow(2, i); j += T * (1 + (unsigned __int64) (pow(2, i) / MPC -
+                                                                                      1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
             av_time_helper++;
             progress = (completed) / max;
-			cout << endl << "progress: " << progress * 100 << "%" << endl;
-			cout << "should end in (I hope) less than: "
-				 << (int) (((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i) / 3600)) << " hours "
-				 << ((int) ((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i)) % 3600) / 60 << " minutes "
-				 << (int) ((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i)) % 60 << " seconds " << endl;
-			//yes, it is inefficient :(, (1+0.01*N/i) because for longer patterns checking will take more time
-			cout << "time passed: " << (int) (((time(NULL) - start_time) / 3600)) << " hours "
-				 << (int) (((time(NULL) - start_time)) % 3600) / 60 << " minutes " << (time(NULL) - start_time) % 60
-				 << " seconds " << endl << endl;
+            cout << endl << "progress: " << progress * 100 << "%" << endl;
+            cout << "should end in (I hope) less than: "
+                 << (int) (((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i) / 3600)) << " hours "
+                 << ((int) ((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i)) % 3600) / 60 << " minutes "
+                 << (int) ((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i)) % 60 << " seconds " << endl;
+            //yes, it is inefficient :(, (1+0.01*N/i) because for longer patterns checking will take more time
+            cout << "time passed: " << (int) (((time(NULL) - start_time) / 3600)) << " hours "
+                 << (int) (((time(NULL) - start_time)) % 3600) / 60 << " minutes " << (time(NULL) - start_time) % 60
+                 << " seconds " << endl << endl;
 
-			for (unsigned __int64 k = 0; k < T && k < pow(2, i); k++) {//starting T threads
-				th[k] = std::thread(check_pattern, std::ref(fres), i, std::ref(counts[ct]),
-									(j + (k * (T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / 8) +
-									 rand() % ((T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / 8)));
-				//not random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)) random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(int)(pow(2,i)/MPC-1)))/8))
+            for (unsigned __int64 k = 0; k < T && k < pow(2, i); k++) {//starting T threads
+                th[k] = std::thread(check_pattern, std::ref(fres), i, std::ref(counts[ct]),
+                                    (j + (k * (T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / 8) +
+                                     rand() % ((T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / 8)));
+                //not random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)) random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(int)(pow(2,i)/MPC-1)))/8))
                 ct++;
-			}
-			cout << endl;
-			for (unsigned __int64 k = 0; k < T && k < pow(2, i); k++) {//wait for threads to join
-				th[k].join();
-			}
-			if (pow(2, i) < T) completed += pow(2, i);
-			else completed += T;
-		}
+            }
+            cout << endl;
+            for (unsigned __int64 k = 0; k < T && k < pow(2, i); k++) {//wait for threads to join
+                th[k].join();
+            }
+            if (pow(2, i) < T) completed += pow(2, i);
+            else completed += T;
+        }
 
-	}
 
-	for(int l=0;l<ct;l++) av+=(counts[l]/ct);
-	for(int l=0;l<ct;l++) standard_deviation+=pow(counts[l]-av,2);
-	standard_deviation=sqrt(standard_deviation/ct);
-	std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-	averageFile << N << "\t" <<  std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() <<'\t'
-				<<(std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count())/av_time_helper<<'\t'<<av<<'\t'<<standard_deviation<<'\t'<<standard_deviation/av*100<< endl;
-	ct=0; av=0; standard_deviation=0;av_time_helper=0;
-
+        for (int l = 0; l < ct; l++) av += (counts[l] / ct);
+        for (int l = 0; l < ct; l++) standard_deviation += pow(counts[l] - av, 2);
+        standard_deviation = sqrt(standard_deviation / ct);
+        std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        averageFile << i << "\t" << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() << '\t'
+                    << (std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count()) / av_time_helper
+                    << '\t' << av << '\t' << standard_deviation << '\t' << standard_deviation / av * 100 << endl;
+        ct = 0;
+        av = 0;
+        standard_deviation = 0;
+        av_time_helper = 0;
+    }
     averageFile.close();
 	fbin.close();
 	fres.close();
