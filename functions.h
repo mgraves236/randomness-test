@@ -15,9 +15,9 @@
 #include <random>
 #include <chrono>
 
-#define N 11 // number of digits in the biggest pattern
+#define N 10 // number of digits in the biggest pattern
 #define T 8  // number of threads, don't use more than ~75% of your Logical Processors or you will kill your pc
-#define MPC 5000 // maximum patterns checked, set to 2^N for all patterns
+#define MPC 1024 // maximum patterns checked, set to 2^N for all patterns
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
 			// rnum 800 MB each, i'm stupid so i don't have any better ideas
 void pseudorandom1(
@@ -104,8 +104,8 @@ void fxor(){// xor function
 }
 
 void test() {// main testing function.
-    //pseudorandom1(10000000);
-	bintotxt(10000000);
+    pseudorandom2(100000000);
+	//bintotxt(10000000);
 	std::ifstream fbin;
 	fbin.open("1010.txt", std::ios::out);
 
