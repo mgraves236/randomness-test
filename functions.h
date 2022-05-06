@@ -105,8 +105,8 @@ void fxor(){// xor function
 }
 
 void test() {// main testing function.
-    pseudorandom2(10000000);
-	//bintotxt(10000000);
+    //pseudorandom2(10000000);
+	bintotxt(10000000000);
 	std::ifstream fbin;
 	fbin.open("1010.txt", std::ios::out);
 
