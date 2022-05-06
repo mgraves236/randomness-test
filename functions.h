@@ -16,7 +16,7 @@
 #include <chrono>
 
 #define N 10 // number of digits in the biggest pattern
-#define T 4  // number of threads, don't use more than ~75% of your Logical Processors or you will kill your pc
+#define T 8  // number of threads, don't use more than ~75% of your Logical Processors or you will kill your pc
 #define MPC 1024 // maximum patterns checked, set to 2^N for all patterns
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
 			// rnum 800 MB each, i'm stupid so i don't have any better ideas
@@ -47,7 +47,7 @@ void pseudorandom2(
 
 void bintotxt(double max) {// function will translate binary file to txt file, every 1 and 0 will become char 0 or 1
 	std::ifstream binary;
-	binary.open("QNGFile5.dat", std::ios::out | std::ios::binary);//QNGFile1XORQNGFile2.data
+	binary.open("QNGFile.dat", std::ios::out | std::ios::binary);//QNGFile1XORQNGFile2.data
 	std::ofstream txt;
 	txt.open("1010.txt", std::ios::out | std::ios::binary);
 
@@ -55,7 +55,7 @@ void bintotxt(double max) {// function will translate binary file to txt file, e
 	char byte;
     int i=0;
 	while (binary.get(byte)&&i<max) {
-        txt << std::bitset<8>(byte);
+        txt << std::bitset<1>(byte);
         i++;
     }
 
@@ -104,7 +104,7 @@ void fxor(){// xor function
 }
 
 void test() {// main testing function.
-    //pseudorandom2(40000000);
+    //pseudorandom2(100000000);
 	bintotxt(10000000);
 	std::ifstream fbin;
 	fbin.open("1010.txt", std::ios::out);
@@ -154,11 +154,10 @@ void test() {// main testing function.
                  << " seconds " << endl << endl;
 
             for (unsigned __int64 k = 0; k < T && k < pow(2, i); k++) {//starting T threads
-               th[k] = std::thread(check_pattern, std::ref(fres), i, std::ref(counts[ct]),
-                                    (j + (k * (T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) /T) +
-                                     rand() % ((T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / T)));
+                th[k] = std::thread(check_pattern, std::ref(fres), i, std::ref(counts[ct]),
+                                    (j + (k * (T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / 8) +
+                                     rand() % ((T * (1 + (unsigned __int64) (pow(2, i) / MPC - 1))) / 8)));
                 //not random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)) random: (j+(k*(T*(1+(int)(pow(2,i)/MPC-1)))/8)+rand()%((T*(1+(int)(pow(2,i)/MPC-1)))/8))
-
                 ct++;
             }
             cout << endl;
