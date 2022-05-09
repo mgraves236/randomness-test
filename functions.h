@@ -17,7 +17,7 @@
 
 #define N 25 // number of digits in the biggest pattern
 #define T 8  // number of threads, don't use more than ~75% of your Logical Processors or you will kill your pc
-#define MPC 64 // maximum patterns checked, set to 2^N for all patterns
+#define MPC 1024 // maximum patterns checked, set to 2^N for all patterns
 string rnum;// because multithread is copying variables, without global string we will make 4 copies of
 			// rnum 800 MB each, i'm stupid so i don't have any better ideas
 void pseudorandom1(
@@ -106,7 +106,7 @@ void fxor(){// xor function
 
 void test() {// main testing function.
     //pseudorandom2(10000000);
-	bintotxt(10000000000);
+	//bintotxt(1000000000);
 	std::ifstream fbin;
 	fbin.open("1010.txt", std::ios::out);
 
@@ -135,7 +135,7 @@ void test() {// main testing function.
 	std::thread th[T];
 	srand(time(NULL));
 	unsigned __int64 start_time = time(NULL);
-
+    int timepassed=0;
 	// measure time only to N = 6
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 	for (unsigned __int64 i = 1; i <= N; i++) {//how big is pattern?, pow(2,i) is pattern size
@@ -143,15 +143,16 @@ void test() {// main testing function.
         for (unsigned __int64 j = 0; j < pow(2, i); j += T * (1 + (unsigned __int64) (pow(2, i) / MPC -
                                                                                       1))) {//set pattern, j is pattern in decimal, we will split (for example) 1024 patterns into 0-128-256-384-512-640-768-896-1024 groups
             av_time_helper++;
+            timepassed=(time(NULL) - start_time);
             progress = (completed) / max;
             cout << endl << "progress: " << progress * 100 << "%" << endl;
             cout << "should end in (I hope) less than: "
-                 << (int) (((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i) / 3600)) << " hours "
-                 << ((int) ((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i)) % 3600) / 60 << " minutes "
-                 << (int) ((time(NULL) - start_time) / (progress) * (1 + 0.05 * N / i)) % 60 << " seconds " << endl;
+                 << (int) ((timepassed / (progress)/ 3600)) << " hours "
+                 << (int) (((int)(timepassed / (progress))% 3600) / 60)<< " minutes "
+                 << (int) (timepassed / (progress)) % 60 << " seconds " << endl;
             //yes, it is inefficient :(, (1+0.01*N/i) because for longer patterns checking will take more time
-            cout << "time passed: " << (int) (((time(NULL) - start_time) / 3600)) << " hours "
-                 << (int) (((time(NULL) - start_time)) % 3600) / 60 << " minutes " << (time(NULL) - start_time) % 60
+            cout << "time passed: " << (int) (timepassed/ 3600) << " hours "
+                 << (int) (timepassed % 3600) / 60 << " minutes " <<timepassed % 60
                  << " seconds " << endl << endl;
 
             for (unsigned __int64 k = 0; k < T && k < pow(2, i); k++) {//starting T threads
